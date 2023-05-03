@@ -73,7 +73,7 @@ WORKDIR C:/demo
 
 COPY . .
 
-RUN cmake -G "Visual Studio 16 2019" -S . -B bin19
+RUN cmake -G '"Visual Studio 16 2019"' -S . -B bin19
 RUN cmake --build bin19
 
 # define a script to run when the container is instantiated:

@@ -15,13 +15,26 @@ SHELL ["cmd", "/S", "/C"]
 
 # Microsoft.VisualStudio.Workload.VCTools
 # https://learn.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-build-tools?view=vs-2019#desktop-development-with-c
-RUN C:\TEMP\vs_buildtools2019.exe --wait --norestart --nocache `
+#RUN C:\TEMP\vs_buildtools2019.exe --wait --norestart --nocache `
+#    --installPath C:\BuildTools `
+#    --channelUri C:\Temp\VisualStudio2019.chman `
+#    --installChannelUri C:\Temp\VisualStudio2019.chman `
+#    --add Microsoft.VisualStudio.Workload.VCTools `
+#    --add Microsoft.VisualStudio.Component.VC.CMake.Project `
+#    --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 `
+#|| IF "%ERRORLEVEL%"=="3010" EXIT 0
+
+RUN C:\TEMP\vs_buildtools2019.exe --quiet --wait --norestart --nocache `
     --installPath C:\BuildTools `
     --channelUri C:\Temp\VisualStudio2019.chman `
     --installChannelUri C:\Temp\VisualStudio2019.chman `
-    --add Microsoft.VisualStudio.Workload.VCTools `
-    --add Microsoft.VisualStudio.Component.VC.CMake.Project `
+    --add Microsoft.VisualStudio.Workload.VCTools;includeRecommended `
+    --add microsoft.visualstudio.component.winxp `
+    --add microsoft.visualstudio.component.vc.atl `
+    --add microsoft.visualstudio.component.vc.atlmfc `
+    --add microsoft.component.vc.runtime.ucrtsdk `
     --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 `
+    --add Microsoft.VisualStudio.Component.VC.CLI.Support `
 || IF "%ERRORLEVEL%"=="3010" EXIT 0
 
 # Microsoft.VisualStudio.Workload.MSBuildTools

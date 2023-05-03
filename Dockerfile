@@ -56,7 +56,9 @@ RUN choco install cmake.install --installargs '"ADD_CMAKE_TO_PATH=System"' -y --
 # RUN cmake --version;
 
 # revert workdir to default:
-WORKDIR C:/
+WORKDIR C:/demo
+
+COPY . .
 
 # define a script to run when the container is instantiated:
 ENTRYPOINT ["powershell.exe", "-NoLogo", "-ExecutionPolicy", "Bypass"]

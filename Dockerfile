@@ -15,7 +15,7 @@ SHELL ["cmd", "/S", "/C"]
 
 # Microsoft.VisualStudio.Workload.VCTools
 # https://learn.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-build-tools?view=vs-2019#desktop-development-with-c
-RUN C:\TEMP\vs_buildtools2019.exe --quiet --wait --norestart --nocache `
+RUN C:\TEMP\vs_buildtools2019.exe --wait --norestart --nocache `
     --installPath C:\BuildTools `
     --channelUri C:\Temp\VisualStudio2019.chman `
     --installChannelUri C:\Temp\VisualStudio2019.chman `
@@ -26,22 +26,22 @@ RUN C:\TEMP\vs_buildtools2019.exe --quiet --wait --norestart --nocache `
 
 # Microsoft.VisualStudio.Workload.MSBuildTools
 # https://learn.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-build-tools?view=vs-2019#msbuild-tools
-RUN C:\TEMP\vs_buildtools2019.exe --quiet --wait --norestart --nocache `
-    --installPath C:\BuildTools `
-    --channelUri C:\Temp\VisualStudio2019.chman `
-    --installChannelUri C:\Temp\VisualStudio2019.chman `
-    --add Microsoft.VisualStudio.Workload.MSBuildTools `
-|| IF "%ERRORLEVEL%"=="3010" EXIT 0
+#RUN C:\TEMP\vs_buildtools2019.exe --quiet --wait --norestart --nocache `
+#    --installPath C:\BuildTools `
+#    --channelUri C:\Temp\VisualStudio2019.chman `
+#    --installChannelUri C:\Temp\VisualStudio2019.chman `
+#    --add Microsoft.VisualStudio.Workload.MSBuildTools `
+#|| IF "%ERRORLEVEL%"=="3010" EXIT 0
 
 # Install current .NET SDK:
 # Microsoft.VisualStudio.Workload.UniversalBuildTools
 # https://learn.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-build-tools?view=vs-2022#universal-windows-platform-build-tools
-RUN C:\TEMP\vs_buildtools2022.exe --quiet --wait --norestart --nocache `
-    --installPath C:\BuildTools `
-    --channelUri C:\Temp\VisualStudio2022.chman `
-    --installChannelUri C:\Temp\VisualStudio2022.chman `
-    --add Microsoft.VisualStudio.Workload.UniversalBuildTools `
-|| IF "%ERRORLEVEL%"=="3010" EXIT 0
+#RUN C:\TEMP\vs_buildtools2022.exe --quiet --wait --norestart --nocache `
+#    --installPath C:\BuildTools `
+#    --channelUri C:\Temp\VisualStudio2022.chman `
+#    --installChannelUri C:\Temp\VisualStudio2022.chman `
+#    --add Microsoft.VisualStudio.Workload.UniversalBuildTools `
+#|| IF "%ERRORLEVEL%"=="3010" EXIT 0
 
 # restore default SHELL to powershell
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]

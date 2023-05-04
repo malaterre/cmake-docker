@@ -25,16 +25,11 @@ SHELL ["cmd", "/S", "/C"]
 #|| IF "%ERRORLEVEL%"=="3010" EXIT 0
 
 RUN C:\TEMP\vs_buildtools2019.exe --quiet --wait --norestart --nocache `
-    --installPath C:\BuildTools `
+	--installPath "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\BuildTools" `
     --channelUri C:\Temp\VisualStudio2019.chman `
     --installChannelUri C:\Temp\VisualStudio2019.chman `
     --add Microsoft.VisualStudio.Workload.VCTools;includeRecommended `
-    --add microsoft.visualstudio.component.winxp `
-    --add microsoft.visualstudio.component.vc.atl `
-    --add microsoft.visualstudio.component.vc.atlmfc `
-    --add microsoft.component.vc.runtime.ucrtsdk `
     --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 `
-    --add Microsoft.VisualStudio.Component.VC.CLI.Support `
 || IF "%ERRORLEVEL%"=="3010" EXIT 0
 
 # Microsoft.VisualStudio.Workload.MSBuildTools
@@ -45,6 +40,19 @@ RUN C:\TEMP\vs_buildtools2019.exe --quiet --wait --norestart --nocache `
 #    --installChannelUri C:\Temp\VisualStudio2019.chman `
 #    --add Microsoft.VisualStudio.Workload.MSBuildTools `
 #|| IF "%ERRORLEVEL%"=="3010" EXIT 0
+
+# Visual Studio 2022 online installer
+ADD https://aka.ms/vs/17/release/channel C:\TEMP\VisualStudio2022.chman
+ADD https://aka.ms/vs/17/release/vs_buildtools.exe C:\TEMP\vs_buildtools2022.exe
+
+RUN C:\TEMP\vs_buildtools2022.exe --quiet --wait --norestart --nocache `
+	--installPath "%ProgramFiles(x86)%\Microsoft Visual Studio\2022\BuildTools" `
+    --channelUri C:\Temp\VisualStudio2022.chman `
+    --installChannelUri C:\Temp\VisualStudio2022.chman `
+    --add Microsoft.VisualStudio.Workload.VCTools;includeRecommended `
+	--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 `
+|| IF "%ERRORLEVEL%"=="3010" EXIT 0
+
 
 # Install current .NET SDK:
 # Microsoft.VisualStudio.Workload.UniversalBuildTools
@@ -73,8 +81,14 @@ WORKDIR C:/demo
 
 COPY . .
 
-RUN cmake -G '"Visual Studio 16 2019"' -S . -B bin19
-RUN cmake --build bin19
+#ARG vswhere = "C:/Program Files (x86)/Microsoft Visual Studio/Installer/vswhere.exe"
+RUN ["C:/Program Files (x86)/Microsoft Visual Studio/Installer/vswhere.exe","-products","*"]
+
+#RUN cmake -G '"Visual Studio 16 2019"' -S . -B bin19
+#RUN cmake --build bin19
+
+#RUN cmake -G '"Visual Studio 17 2022"' -S . -B bin22
+#RUN cmake --build bin22
 
 # define a script to run when the container is instantiated:
 ENTRYPOINT ["powershell.exe", "-NoLogo", "-ExecutionPolicy", "Bypass"]
